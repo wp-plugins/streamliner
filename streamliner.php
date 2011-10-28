@@ -3,7 +3,7 @@
 Plugin Name: Streamliner Embed
 Plugin URI: http://streamliner.co
 Description: Inserts an embedded streamline into a Wordpress blog entry. 
-Version: 0.1
+Version: 0.2
 Author: Chris Fong
 Author URI: http://streamliner.co
 License: GPL2
@@ -24,14 +24,24 @@ class Streamliner extends Streamliner_Plugin
 	}
 	
 	function replace($matches) {
-		preg_match("/([^ ]+)(?: ([0-9]+))?(?: ([0-9]+))?/", $matches[1], $parts);
+		$cache_group = "STREAMLINER";
+		preg_match("/(http[^ ]+)(?: ([0-9]+))?(?: ([0-9]+))?/", $matches[1], $parts);
 		if(count($parts) > 0) {
 			
 			// Match host and streamline id
 			$url  = $parts[1];
 			preg_match("/(http:\/\/[^\/]+)\/s\/([a-zA-Z0-9]+)\/?/", $url, $url_matches);
 			if(count($url_matches) == 0) {
-				return '';
+				// Attempt short URL matching
+				$new_url = wp_cache_get($url, $cache_group);
+				if(false == $new_url) {
+					$new_url = file_get_contents($url."?show_link=true");
+					wp_cache_set($url, $new_url, $cache_group);
+				}
+				preg_match("/(http:\/\/[^\/]+)\/s\/([a-zA-Z0-9]+)\/?/", $new_url, $url_matches);
+				if(count($url_matches) == 0) {
+					return '';
+				}
 			}
 			$host = $url_matches[1];
 			$streamline_id = $url_matches[2];
@@ -47,7 +57,6 @@ class Streamliner extends Streamliner_Plugin
 
 			// Fetch streamline thumbnail markup from Streamliner
 			$sl_wp_url = $host."/wordpress/".$streamline_id."/".$query;
-			$cache_group = "STREAMLINER";
 			$streamline = wp_cache_get($sl_wp_url, $cache_group);
 			if(false == $streamline) {
 				$streamline = file_get_contents($sl_wp_url);
