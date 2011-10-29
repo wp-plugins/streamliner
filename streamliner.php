@@ -3,7 +3,7 @@
 Plugin Name: Streamliner Embed
 Plugin URI: http://streamliner.co
 Description: Inserts an embedded streamline into a Wordpress blog entry. 
-Version: 0.2
+Version: 0.3
 Author: Chris Fong
 Author URI: http://streamliner.co
 License: GPL2
