@@ -3,7 +3,7 @@
 Plugin Name: Streamliner Embed
 Plugin URI: http://streamliner.co
 Description: Inserts an embedded streamline into a Wordpress blog entry. 
-Version: 0.3
+Version: 0.4
 Author: Chris Fong
 Author URI: http://streamliner.co
 License: GPL2
@@ -74,11 +74,11 @@ class Streamliner extends Streamliner_Plugin
 }
 
 wp_enqueue_style(
-    "jquery.fancybox", WP_PLUGIN_URL."/fancybox/jquery.fancybox-1.3.4.css", 
+    "jquery.fancybox", plugins_url( 'fancybox/jquery.fancybox-1.3.4.css' , __FILE__), 
     false, "1.3.1");
 wp_enqueue_script("jquery");
 wp_enqueue_script(
-  "jquery.fancybox", WP_PLUGIN_URL."/fancybox/jquery.fancybox-1.3.4.pack.js", 
+  "jquery.fancybox", plugins_url( 'fancybox/jquery.fancybox-1.3.4.pack.js' , __FILE__), 
   array("jquery"), "1.3.1",1);	
 $streamliner = new Streamliner;
 ?>
