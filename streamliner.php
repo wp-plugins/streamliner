@@ -74,11 +74,11 @@ class Streamliner extends Streamliner_Plugin
 }
 
 wp_enqueue_style(
-    "jquery.fancybox", WP_PLUGIN_URL."/streamliner/fancybox/jquery.fancybox-1.3.4.css", 
+    "jquery.fancybox", WP_PLUGIN_URL."/fancybox/jquery.fancybox-1.3.4.css", 
     false, "1.3.1");
 wp_enqueue_script("jquery");
 wp_enqueue_script(
-  "jquery.fancybox", WP_PLUGIN_URL."/streamliner/fancybox/jquery.fancybox-1.3.4.pack.js", 
+  "jquery.fancybox", WP_PLUGIN_URL."/fancybox/jquery.fancybox-1.3.4.pack.js", 
   array("jquery"), "1.3.1",1);	
 $streamliner = new Streamliner;
 ?>
